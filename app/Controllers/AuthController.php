@@ -35,13 +35,11 @@ class AuthController extends BaseController
     const VerifyEmailWrongEmail = 701;
     const VerifyEmailExist = 702;
 
-    public function login($request, $response, $args)
-    {
+    public function login($request, $response, $args) {
         return $this->view()->display('auth/login.tpl');
     }
 
-    public function loginHandle($request, $response, $args)
-    {
+    public function loginHandle($request, $response, $args) {
         // $data = $request->post('sdf');
         $email = $request->getParam('email');
         $email = strtolower($email);
@@ -77,8 +75,7 @@ class AuthController extends BaseController
         return $this->echoJson($response, $res);
     }
 
-    public function register($request, $response, $args)
-    {
+    public function register($request, $response, $args) {
         $ary = $request->getQueryParams();
         $code = "";
         if (isset($ary['code'])) {
@@ -88,8 +85,7 @@ class AuthController extends BaseController
         return $this->view()->assign('code', $code)->assign('requireEmailVerification', $requireEmailVerification)->display('auth/register.tpl');
     }
 
-    public function registerHandle($request, $response, $args)
-    {
+    public function registerHandle($request, $response, $args) {
         $name = $request->getParam('name');
         $email = $request->getParam('email');
         $email = strtolower($email);
@@ -165,10 +161,15 @@ class AuthController extends BaseController
         $user->t = 0;
         $user->u = 0;
         $user->d = 0;
-        $user->transfer_enable = Tools::toGB(Config::get('defaultTraffic'));
+        $user->transfer_enable = Tools::toGB(Config::get($c['user_id'] == '1' ? 'defaultTraffic' : 'publicTraffic'));
         $user->invite_num = Config::get('inviteNum');
         $user->reg_ip = Http::getClientIP();
         $user->ref_by = $c->user_id;
+
+        //赠送邀请人流量
+        if (intval(Config::get('inviterTraffic')) > 0) {
+
+        }
 
         if ($user->save()) {
             $res['ret'] = 1;
@@ -181,8 +182,7 @@ class AuthController extends BaseController
         return $this->echoJson($response, $res);
     }
 
-    public function sendVerifyEmail($request, $response, $args)
-    {
+    public function sendVerifyEmail($request, $response, $args) {
         $res = [];
         $email = $request->getParam('email');
 
@@ -212,8 +212,7 @@ class AuthController extends BaseController
         return $this->echoJson($response, $res);
     }
 
-    public function logout($request, $response, $args)
-    {
+    public function logout($request, $response, $args) {
         Auth::logout();
         return $this->redirect($response, '/auth/login');
     }

@@ -7,8 +7,35 @@
  */
 
 .icon-block {
-  padding: 0 15px;
+    padding: 0 15px;
 }
+
 .icon-block .material-icons {
-	font-size: inherit;
+    font-size: inherit;
+}
+
+.features {
+    padding: 0;
+}
+
+.feature-wrap {
+    margin-bottom: 35px;
+    overflow: hidden;
+    text-align: center;
+}
+
+.feature-wrap > i {
+    font-size: 7.5em;
+    border-radius: 100%;
+    text-align: center;
+    background: #ffffff;
+    color: #3498db;
+}
+
+.feature-wrap h2 {
+    margin-top: 10px;
+}
+
+.container {
+    width: 90%;
 }

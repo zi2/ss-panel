@@ -21,45 +21,48 @@ use App\Utils\Http;
 class HomeController extends BaseController
 {
 
-    public function index()
-    {
+    public function index() {
+        $c = [
+            'win'      => DbConfig::get('down-win', "https://yunpan.cn/OcBWVc3wKBKs5d22"),
+            'mac'      => DbConfig::get('down-mac', "https://yunpan.cn/OcPxVvAPqGQQgS"),
+            'ios'      => DbConfig::get('down-ios'),
+            'ios2'     => DbConfig::get('down-ios2', "https://itunes.apple.com/cn/app/shadowrocket-for-shadowsocks/id932747118"),
+            'android'  => DbConfig::get('down-android', "https://yunpan.cn/Oc6kBAm96Nwrj7"),
+            'android2' => DbConfig::get('down-android2', "https://yunpan.cn/OcPxZxKxjz3ySr"),
+        ];
         $homeIndexMsg = DbConfig::get('home-index');
-        return $this->view()->assign('homeIndexMsg', $homeIndexMsg)->display('index.tpl');
+        return $this->view()->assign('homeIndexMsg', $homeIndexMsg)->assign('c', $c)->display('index.tpl');
     }
 
-    public function code()
-    {
+    public function code() {
         $msg = DbConfig::get('home-code');
         $codes = InviteCode::where('user_id', '=', '0')->take(10)->get();
         return $this->view()->assign('codes', $codes)->assign('msg', $msg)->display('code.tpl');
     }
 
-    public function debug($request, $response, $args)
-    {
+    public function debug($request, $response, $args) {
         $server = [
-            "headers" => $request->getHeaders(),
+            "headers"      => $request->getHeaders(),
             "content_type" => $request->getContentType()
         ];
         $res = [
             "server_info" => $server,
-            "ip" => Http::getClientIP(),
-            "version" => Config::get('version'),
-            "reg_count" => Check::getIpRegCount(Http::getClientIP()),
+            "ip"          => Http::getClientIP(),
+            "version"     => Config::get('version'),
+            "reg_count"   => Check::getIpRegCount(Http::getClientIP()),
         ];
         Logger::debug(json_encode($res));
         return $this->echoJson($response, $res);
     }
 
-    public function tos()
-    {
+    public function tos() {
         return $this->view()->display('tos.tpl');
     }
 
-    public function postDebug(Request $request,Response $response, $args)
-    {
+    public function postDebug(Request $request, Response $response, $args) {
         $res = [
-            "body" => $request->getBody(), 
-            "params" => $request->getParams() 
+            "body"   => $request->getBody(),
+            "params" => $request->getParams()
         ];
         return $this->echoJson($response, $res);
     }

@@ -12,21 +12,19 @@ class DbConfig
      * @param $key
      * @return string
      */
-    public static function get($key)
-    {
+    public static function get($key, $default = null) {
         try {
             $c = ConfigModel::where('key', $key)->firstOrFail();
             return $c->value;
         } catch (ModelNotFoundException $e) {
-            return null;
+            return $default;
         } catch (\Exception $e) {
-            return null;
+            return $default;
         }
     }
 
-    public static function set($key, $value)
-    {
-        if($value == null){
+    public static function set($key, $value) {
+        if ($value == null) {
             $value = "";
         }
         try {

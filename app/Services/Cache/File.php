@@ -11,40 +11,36 @@ class File extends Cache
     protected $cacheDir;
 
 
-    public function __construct($dir = '/tmp')
-    {
+    public function __construct($dir = '/tmp') {
         $this->cacheDir = $dir;
     }
 
-    protected function getFilePath($key)
-    {
+    protected function getFilePath($key) {
         return $this->cacheDir . '/' . $key;
     }
 
 
-    public function set($key, $value, $ttl)
-    {
+    public function set($key, $value, $ttl) {
         $content = json_encode([
-            "key" => $key,
-            "value" => $value,
+            "key"        => $key,
+            "value"      => $value,
             "expires_at" => time() + $ttl
         ]);
         return file_put_contents($this->getFilePath($key), $content);
     }
 
-    public function del($key)
-    {
+    public function del($key) {
         return unlink($this->getFilePath($key));
     }
 
-    public function get($key)
-    {
-        try{
+    public function get($key) {
+        if (empty($key)) return null;
+        try {
             $content = file_get_contents($this->getFilePath($key));
-        }catch (\Exception $e){
+        } catch (\Exception $e) {
             return null;
         }
-        if(!$content){
+        if (!$content) {
             return null;
         }
         $data = json_decode($content, true);
@@ -54,7 +50,7 @@ class File extends Cache
                 return null;
             }
         }
-        if(!isset($data['value'])){
+        if (!isset($data['value'])) {
             return null;
         }
         return $data['value'];
