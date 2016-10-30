@@ -95,12 +95,17 @@ class AuthController extends BaseController
         $verifycode = $request->getParam('verifycode');
 
         // check code
-        $c = InviteCode::where('code', $code)->first();
-        if ($c == null) {
-            $res['ret'] = 0;
-            $res['error_code'] = self::WrongCode;
-            $res['msg'] = "邀请码无效";
-            return $this->echoJson($response, $res);
+        if (Config::get('codeRequired')) {
+            $c = InviteCode::where('code', $code)->first();
+            if ($c == null) {
+                $res['ret'] = 0;
+                $res['error_code'] = self::WrongCode;
+                $res['msg'] = "邀请码无效";
+                return $this->echoJson($response, $res);
+            }
+        } else {
+            $c = new InviteCode();
+            $c['user_id'] = 0;
         }
 
         // check email format

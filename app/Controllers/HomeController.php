@@ -23,12 +23,13 @@ class HomeController extends BaseController
 
     public function index() {
         $c = [
-            'win'      => DbConfig::get('down-win', "https://yunpan.cn/OcBWVc3wKBKs5d22"),
-            'mac'      => DbConfig::get('down-mac', "https://yunpan.cn/OcPxVvAPqGQQgS"),
-            'ios'      => DbConfig::get('down-ios'),
+            'win'      => DbConfig::get('down-win', "https://pan.baidu.com/s/1hrEQPpi"),
+            'win2'      => DbConfig::get('down-win', "https://pan.baidu.com/s/1pLnOqiJ"),
+            'mac'      => DbConfig::get('down-mac', "https://pan.baidu.com/s/1slfCNEl"),
+            'ios'      => DbConfig::get('down-ios',"https://pan.baidu.com/s/1eSeDrmM"),
             'ios2'     => DbConfig::get('down-ios2', "https://itunes.apple.com/cn/app/shadowrocket-for-shadowsocks/id932747118"),
-            'android'  => DbConfig::get('down-android', "https://yunpan.cn/Oc6kBAm96Nwrj7"),
-            'android2' => DbConfig::get('down-android2', "https://yunpan.cn/OcPxZxKxjz3ySr"),
+            'android'  => DbConfig::get('down-android', "https://pan.baidu.com/s/1slQZUSP"),
+            'android2' => DbConfig::get('down-android2', "https://pan.baidu.com/s/1kUGgBdl"),
         ];
         $homeIndexMsg = DbConfig::get('home-index');
         return $this->view()->assign('homeIndexMsg', $homeIndexMsg)->assign('c', $c)->display('index.tpl');

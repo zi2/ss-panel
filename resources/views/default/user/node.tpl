@@ -17,7 +17,7 @@
             <div class="col-md-12">
                 <div class="callout callout-warning">
                     <h4>注意!</h4>
-                    <p>请勿在任何地方公开节点地址！</p>
+                    <p>请勿在任何地方公开节点地址，这是你专享的！</p>
                     <p>流量比例为0.5即使用1000MB按照500MB流量记录记录结算.</p>
                     {$msg}
                 </div>
@@ -35,8 +35,11 @@
                                         <img src="../assets/public/img/iconfont-server.png" alt="Server Node">
                                     </div>
                                     <div class="product-info">
-                                        <a href="./node/{$node->id}" class="product-title">{$node->name} <span
-                                                    class="label label-info pull-right">{$node->status}</span></a>
+                                        <a href="./node/{$node->id}" class="product-title">{$node->name}
+                                            【点击查看二维码】
+                                            <span
+                                                    class="label label-info pull-right">{$node->status}</span>
+                                        </a>
                                         <p>
                                             {$node->info}
                                         </p>

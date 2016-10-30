@@ -15,9 +15,17 @@
     <div class="nav-wrapper container"><a id="logo-container" href="/" class="brand-logo">{$config["appName"]}</a>
         <ul class="right hide-on-med-and-down">
             <li><a href="/">首页</a></li>
-            <li><a href="#clients">客户端下载</a></li>
-            <li><a href="http://www.shadowto.com/guide">使用教程</a></li>
+            <li><a href="/#clients">客户端下载</a></li>
+            <li><a class="dropdown-button" href="#!" data-activates="tt">使用教程</a>
+                <ul id="tt" class="dropdown-content" style="width: 12em;">
+                    <li><a href="http://tdnet.top/2016/10/shadowsocks%E8%87%AA%E7%94%B1%E6%A2%ADwindows%E7%89%88%E6%9C%AC%E6%95%99%E7%A8%8B/"
+                           target="_blank">Windows教程</a></li>
+                    <li><a href="http://tdnet.top/2016/10/shadowsocks%E8%87%AA%E7%94%B1%E6%A2%ADandroid%E8%AE%BE%E7%BD%AE%E6%95%99%E7%A8%8B/"
+                           target="_blank">Android教程</a></li>
+                </ul>
+            </li>
             <li><a href="/code">免费邀请码</a></li>
+            <li><a href="https://item.taobao.com/item.htm?id=539951097575" target="_blank">￥2.88元购买</a></li>
             {if $user->isLogin}
                 <li><a href="/user">用户中心</a></li>
                 <li><a href="/user/logout">退出</a></li>

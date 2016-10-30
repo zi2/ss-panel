@@ -80,8 +80,10 @@
                         <div class="feature-wrap"><i class="fa fa-desktop"></i>
                             <h2>Win &amp; Mac </h2>
                             <h3>
-                                <a href="{$c['win']}" class="btn btn-primary blue" target="_black">Shadowsocks-win32/64</a><br>
-                                <a href="{$c['mac']}" class="btn btn-primary blue" target="_black">Shadowsocks-Mac</a></h3>
+                                <a href="{$c['win']}" class="btn btn-primary blue" target="_black">
+                                    <i class="fa fa-download"></i> Win32/64</a><br>
+                                <a href="{$c['mac']}" class="btn btn-primary blue" target="_black">
+                                    <i class="fa fa-download"></i> Mac OS</a></h3>
                         </div>
                     </div>
                     <!--/.col-md-4-->
@@ -90,8 +92,10 @@
                         <div class="feature-wrap"><i class="fa fa-apple"></i>
                             <h2>Apple iOS</h2>
                             <h3>
-                                <a href="{$c['ios']}" class="btn btn-primary blue" target="_black">shadowsocks越狱版</a><br>
-                                <a href="{$c['ios2']}" class="btn btn-primary blue" target="_black">shadowsocks标准版</a></h3>
+                                <a href="{$c['ios']}" class="btn btn-primary blue" target="_black">
+                                    <i class="fa fa-download"></i> 越狱版</a><br>
+                                <a href="{$c['ios2']}" class="btn btn-primary blue" target="_black">
+                                    <i class="fa fa-download"></i> AppStore</a></h3>
                         </div>
                     </div>
                     <!--/.col-md-4-->
@@ -100,8 +104,10 @@
                         <div class="feature-wrap"><i class="fa fa-android"></i>
                             <h2>Android</h2>
                             <h3>
-                                <a href="{$c['android']}" class="btn btn-primary blue" target="_black">shadowsocksR</a><br>
-                                <a href="{$c['android2']}" class="btn btn-primary blue" target="_black">shadowsocks</a>
+                                <a href="{$c['android']}" class="btn btn-primary blue" target="_black">
+                                    <i class="fa fa-download"></i> 版本2</a><br>
+                                <a href="{$c['android2']}" class="btn btn-primary blue" target="_black">
+                                    <i class="fa fa-download"></i> 版本3</a>
                             </h3>
                         </div>
                     </div>

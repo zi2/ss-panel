@@ -65,6 +65,7 @@
         </div>
 
         <a href="/auth/login" class="text-center">已经注册？请登录</a>
+        <a href="/code" class="text-center text-danger pull-right">查看邀请码</a>
     </div><!-- /.form-box -->
 </div><!-- /.register-box -->
 

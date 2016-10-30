@@ -41,6 +41,7 @@
         </div>
         <a href="/password/reset">忘记密码</a><br>
         <a href="/auth/register" class="text-center">注册个帐号</a>
+        <a href="/#clients" class="text-center">下载客户端</a>
 
     </div><!-- /.login-box-body -->
 </div><!-- /.login-box -->
