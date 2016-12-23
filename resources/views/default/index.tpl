@@ -30,8 +30,16 @@
         <div class="row">
             <div class="col s12 m4">
                 <div class="icon-block">
+<<<<<<< HEAD
                     <h2 class="center light-blue-text"><i class="material-icons">flash_on</i></h2>
                     <h5 class="center">高速接入</h5>
+=======
+                    <!-- To be compatible with some old browsers(especially mobile browsers), use &#xE3E7 instead of flash_on. For more information visit the link below.
+                    http://google.github.io/material-design-icons/#using-the-icons-in-html
+                    -->
+                    <h2 class="center light-blue-text"><i class="material-icons">&#xE3E7</i></h2>
+                    <h5 class="center">Super Fast</h5>
+>>>>>>> remotes/upstream/master
 
                     <p class="light">
                         优先全球机房，直连中国高速节点，中转加速千兆网络带宽，体验畅爽网路之游.
@@ -42,8 +50,16 @@
 
             <div class="col s12 m4">
                 <div class="icon-block">
+<<<<<<< HEAD
                     <h2 class="center light-blue-text"><i class="material-icons">group</i></h2>
                     <h5 class="center">贴心服务</h5>
+=======
+                    <!-- To be compatible with some old browsers(especially mobile browsers), use &#xE7EF instead of group. For more information visit the link below.
+                    http://google.github.io/material-design-icons/#using-the-icons-in-html
+                    -->
+                    <h2 class="center light-blue-text"><i class="material-icons">&#xE7EF</i></h2>
+                    <h5 class="center">Open Source</h5>
+>>>>>>> remotes/upstream/master
 
                     <p class="light">
                         细心解答您的疑问协助您可以正常使用，保证每一位用户的售后支持.
@@ -53,8 +69,16 @@
 
             <div class="col s12 m4">
                 <div class="icon-block">
+<<<<<<< HEAD
                     <h2 class="center light-blue-text"><i class="material-icons">settings</i></h2>
                     <h5 class="center">轻松使用</h5>
+=======
+                    <!-- To be compatible with some old browsers(especially mobile browsers), use &#xE8B8 instead of settings. For more information visit the link below.
+                    http://google.github.io/material-design-icons/#using-the-icons-in-html
+                    -->
+                    <h2 class="center light-blue-text"><i class="material-icons">&#xE8B8</i></h2>
+                    <h5 class="center">Easy to work with</h5>
+>>>>>>> remotes/upstream/master
 
                     <p class="light">
                         多平台可用，包括PC, MAC, 手机 (Android 和 iOS)和路由器(OpenWRT).
