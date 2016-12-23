@@ -63,6 +63,14 @@ class User extends Model
         return Tools::toDateTime($this->attributes['last_check_in_time']);
     }
 
+    public function dueTime()
+    {
+        if ($this->attributes['expire_time'] == 0) {
+            return "[永久]";
+        }
+        return Tools::toDateTime($this->attributes['expire_time']);
+    }
+
     public function regDate()
     {
         return $this->attributes['reg_date'];

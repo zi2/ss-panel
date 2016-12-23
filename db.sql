@@ -105,7 +105,7 @@ CREATE TABLE `user` (
   `last_get_gift_time` int(11) NOT NULL DEFAULT '0',
   `last_check_in_time` int(11) NOT NULL DEFAULT '0',
   `last_rest_pass_time` int(11) NOT NULL DEFAULT '0',
-  `reg_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `reg_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `invite_num` int(8) NOT NULL DEFAULT '0',
   `is_admin` int(2) NOT NULL DEFAULT '0',
   `ref_by` int(11) NOT NULL DEFAULT '0',
@@ -165,5 +165,12 @@ CREATE TABLE `sp_email_verify` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+/**/
+-- upgrade
+ALTER TABLE `user` MODIFY COLUMN `reg_date`  timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP AFTER `last_rest_pass_time`;
+ALTER TABLE `user` add `group` int NOT NULL DEFAULT 0;
+ALTER TABLE `user` ADD `cycle` int DEFAULT 1;-- 账单周期 1：月  2：季  3：半年  4：年
+ALTER TABLE `user` ADD `bill_day` DATETIME DEFAULT 0; -- 账单日
+ALTER TABLE `user` ADD `last_bill_day` DATETIME; -- 最后一次出账日
 
 

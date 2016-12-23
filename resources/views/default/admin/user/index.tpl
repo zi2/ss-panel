@@ -12,6 +12,13 @@
 
     <!-- Main content -->
     <section class="content">
+        <form class="form-inline">
+            <div class="form-group">
+                <label class="control-label">邮箱</label>
+                <input class="form-control" type="text" name="email" value="{if isset($form['email'])}{$form['email']}{/if}"/>
+            </div>
+            <button class="btn btn-primary" type="submit">查询</button>
+        </form>
         <div class="row">
             <div class="col-xs-12">
                 <div class="box">
@@ -33,23 +40,23 @@
                                 <th>操作</th>
                             </tr>
                             {foreach $users as $user}
-                            <tr>
-                                <td>#{$user->id}</td>
-                                <td>{$user->email}</td>
-                                <td>{$user->port}</td>
-                                <td>{$user->enable}</td>
-                                <td>{$user->method}</td>
-                                <td>{$user->usedTraffic()}/{$user->enableTraffic()}</td>
-                                <td>{$user->lastSsTime()}</td>
-                                <td>{$user->lastCheckInTime()}</td>
-                                <th>{$user->reg_date}</th>
-                                <th>{$user->reg_ip}</th>
-                                <th>{$user->ref_by}</th>
-                                <td>
-                                    <a class="btn btn-info btn-sm" href="/admin/user/{$user->id}/edit">编辑</a>
-                                    <a class="btn btn-danger btn-sm" id="delete" value="{$user->id}" href="/admin/user/{$user->id}/delete">删除</a>
-                                </td>
-                            </tr>
+                                <tr>
+                                    <td>#{$user->id}</td>
+                                    <td>{$user->email}</td>
+                                    <td>{$user->port}</td>
+                                    <td>{$user->enable}</td>
+                                    <td>{$user->method}</td>
+                                    <td>{$user->usedTraffic()}/{$user->enableTraffic()}</td>
+                                    <td>{$user->lastSsTime()}</td>
+                                    <td>{$user->lastCheckInTime()}</td>
+                                    <th>{$user->reg_date}</th>
+                                    <th>{$user->reg_ip}</th>
+                                    <th>{$user->ref_by}</th>
+                                    <td>
+                                        <a class="btn btn-info btn-sm" href="/admin/user/{$user->id}/edit">编辑</a>
+                                        <a class="btn btn-danger btn-sm" id="delete" value="{$user->id}" href="/admin/user/{$user->id}/delete">删除</a>
+                                    </td>
+                                </tr>
                             {/foreach}
                         </table>
                         {$users->render()}
@@ -63,46 +70,49 @@
 
 
 <script>
-    $(document).ready(function(){
-        function delete(){
+    $(document).ready(function () {
+        function
+
+        delete()
+        {
             $.ajax({
-                type:"DELETE",
-                url:"/admin/user/",
-                dataType:"json",
-                data:{
+                type: "DELETE",
+                url: "/admin/user/",
+                dataType: "json",
+                data: {
                     name: $("#name").val()
                 },
-                success:function(data){
-                    if(data.ret){
+                success: function (data) {
+                    if (data.ret) {
                         $("#msg-error").hide(100);
                         $("#msg-success").show(100);
                         $("#msg-success-p").html(data.msg);
                         window.setTimeout("location.href='/admin/user'", 2000);
-                    }else{
+                    } else {
                         $("#msg-error").hide(10);
                         $("#msg-error").show(100);
                         $("#msg-error-p").html(data.msg);
                     }
                 },
-                error:function(jqXHR){
+                error: function (jqXHR) {
                     $("#msg-error").hide(10);
                     $("#msg-error").show(100);
-                    $("#msg-error-p").html("发生错误："+jqXHR.status);
+                    $("#msg-error-p").html("发生错误：" + jqXHR.status);
                 }
             });
         }
-        $("html").keydown(function(event){
-            if(event.keyCode==13){
+        $("html").keydown(function (event) {
+            if (event.keyCode == 13) {
                 login();
             }
         });
-        $("#delete").click(function(){
+        $("#delete").click(function () {
             delete();
         });
-        $("#ok-close").click(function(){
+        $("#ok-close").click(function () {
             $("#msg-success").hide(100);
         });
-        $("#error-close").click(function(){
+        $("#error-close").click(function () {
             $("#msg-error").hide(100);
         });
     })

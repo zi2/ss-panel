@@ -83,6 +83,20 @@
                                         </div>
                                     </div>
 
+
+                                    <div class="form-group">
+                                        <label class="col-sm-3 control-label">用户组</label>
+                                        <div class="col-sm-9">
+                                            <input class="form-control" id="group" value="{$user->group}">
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-sm-3 control-label">到期日</label>
+                                        <div class="col-sm-9">
+                                            <input class="form-control" type="text" id="expire_time" value="{$user->dueTime()}">
+                                        </div>
+                                    </div>
+
                                 </fieldset>
                                 <fieldset class="col-sm-6">
                                     <legend>ShadowSocks连接信息</legend>
@@ -133,7 +147,7 @@
 
                                         <div class="col-sm-9">
                                             <input class="form-control" id="traffic_usage" type="text"
-                                                   value="{$user->usedTraffic()}" readonly>
+                                                   value="{$user->usedTraffic()}">
                                         </div>
                                     </div>
                                 </fieldset>
@@ -163,6 +177,7 @@
                     <!-- /.box-body -->
                     <div class="box-footer">
                         <button type="submit" id="submit" name="action" value="add" class="btn btn-primary">修改</button>
+                        <button type="submit" id="reset" name="action" value="reset" class="btn btn-danger">重置</button>
                     </div>
                 </div>
             </div>
@@ -176,12 +191,12 @@
 
 <script>
     $(document).ready(function () {
-        function submit() {
+        function submit($data) {
             $.ajax({
                 type: "PUT",
                 url: "/admin/user/{$user->id}",
                 dataType: "json",
-                data: {
+                data: $.extend({
                     email: $("#email").val(),
                     pass: $("#pass").val(),
                     port: $("#port").val(),
@@ -191,8 +206,10 @@
                     method: $("#method").val(),
                     enable: $("#enable").val(),
                     is_admin: $("#is_admin").val(),
-                    ref_by: $("#ref_by").val()
-                },
+                    group: $("#group").val(),
+                    ref_by: $("#ref_by").val(),
+                    expire_time: $("#expire_time").val(),
+                }, $data),
                 success: function (data) {
                     if (data.ret) {
                         $("#msg-error").hide(100);
@@ -220,6 +237,11 @@
         });
         $("#submit").click(function () {
             submit();
+        });
+        $("#reset").click(function () {
+            submit({
+                action:'reset'
+            });
         });
         $("#ok-close").click(function () {
             $("#msg-success").hide(100);
