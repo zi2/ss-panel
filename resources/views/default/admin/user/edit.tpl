@@ -91,7 +91,7 @@
                                         </div>
                                     </div>
                                     <div class="form-group">
-                                        <label class="col-sm-3 control-label">到期日</label>
+                                        <label class="col-sm-3 control-label">到期时间</label>
                                         <div class="col-sm-9">
                                             <input class="form-control" type="text" id="expire_time" value="{$user->dueTime()}">
                                         </div>
@@ -147,7 +147,7 @@
 
                                         <div class="col-sm-9">
                                             <input class="form-control" id="traffic_usage" type="text"
-                                                   value="{$user->usedTraffic()}">
+                                                   value="{$user->usedTraffic()}" readonly>
                                         </div>
                                     </div>
                                 </fieldset>
@@ -178,6 +178,7 @@
                     <div class="box-footer">
                         <button type="submit" id="submit" name="action" value="add" class="btn btn-primary">修改</button>
                         <button type="submit" id="reset" name="action" value="reset" class="btn btn-danger">重置</button>
+                        <label><input type="checkbox" id="1m">延长1月</label>
                     </div>
                 </div>
             </div>
@@ -209,13 +210,14 @@
                     group: $("#group").val(),
                     ref_by: $("#ref_by").val(),
                     expire_time: $("#expire_time").val(),
+                    extend: $("#1m").is(':checked') ? '1' : '',
                 }, $data),
                 success: function (data) {
                     if (data.ret) {
                         $("#msg-error").hide(100);
                         $("#msg-success").show(100);
                         $("#msg-success-p").html(data.msg);
-                        window.setTimeout("location.href='/admin/user'", 2000);
+                        window.setTimeout("history.back()", 2000);
                     } else {
                         $("#msg-error").hide(10);
                         $("#msg-error").show(100);
@@ -240,7 +242,7 @@
         });
         $("#reset").click(function () {
             submit({
-                action:'reset'
+                action: 'reset'
             });
         });
         $("#ok-close").click(function () {

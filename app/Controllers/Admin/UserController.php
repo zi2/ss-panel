@@ -15,9 +15,17 @@ class UserController extends AdminController
             $pageNum = $request->getQueryParams()["page"];
         }
         $form = $request->getQueryParams();
-        $users = User::when(!empty($form['email']), function ($q) use ($form) {
-            return $q->where('email', $form['email']);
-        })->paginate(15, ['*'], 'page', $pageNum);
+        $users = User::whereRaw("1=1");
+        foreach (['email', 'group'] as $k) {
+            $users = $users->when(isset($form[$k]) && trim($form[$k]) != '', function ($q) use ($k, $form) {
+                return $q->where($k, $form[$k]);
+            });
+        }
+        $form['page'] = $pageNum;
+        $users = $users->when(!empty($form['order']), function ($q) use ($form) {
+            return $q->orderBy($form['order'], 'desc');
+        })
+            ->paginate(15, ['*'], 'page', $pageNum);
         $users->setPath('/admin/user');
         return $this->view()->assign('users', $users)->assign('form', $form)->display('admin/user/index.tpl');
     }
@@ -36,6 +44,12 @@ class UserController extends AdminController
         $user = User::find($id);
 
         $user->email = $request->getParam('email');
+        $user->transfer_enable = Tools::toGB($request->getParam('transfer_enable'));
+        if (!empty($request->getParam('extend')))
+            $user->expire_time = date_add(new \DateTime(date('y-m-d h:i:s', max($user->expire_time, time()))), new \DateInterval('P1M'))->getTimestamp();
+        $user->group = $request->getParam('group');
+        $user->expire_time = strtotime($request->getParam('expire_time'));
+
         if ($request->getParam('action') == 'reset') {
             $user->u = 0;
             $user->d = 0;
@@ -47,14 +61,11 @@ class UserController extends AdminController
                 $user->passwd = $request->getParam('passwd');
             }
             $user->port = $request->getParam('port');
-            $user->transfer_enable = Tools::toGB($request->getParam('transfer_enable'));
             $user->invite_num = $request->getParam('invite_num');
             $user->method = $request->getParam('method');
             $user->enable = $request->getParam('enable');
             $user->is_admin = $request->getParam('is_admin');
             $user->ref_by = $request->getParam('ref_by');
-            $user->group = $request->getParam('group');
-            $user->expire_time = strtotime($request->getParam('expire_time'));
         }
 
         if (!$user->save()) {

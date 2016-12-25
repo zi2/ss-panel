@@ -17,13 +17,17 @@
                 <label class="control-label">邮箱</label>
                 <input class="form-control" type="text" name="email" value="{if isset($form['email'])}{$form['email']}{/if}"/>
             </div>
+            <div class="form-group">
+                <label class="control-label">用户组</label>
+                <input class="form-control" type="text" name="group" value="{if isset($form['group'])}{$form['group']}{/if}"/>
+            </div>
             <button class="btn btn-primary" type="submit">查询</button>
         </form>
         <div class="row">
             <div class="col-xs-12">
                 <div class="box">
                     <div class="box-body table-responsive no-padding">
-                        {$users->render()}
+                        {$users->appends($form)->render()}
                         <table class="table table-hover">
                             <tr>
                                 <th>ID</th>
@@ -54,7 +58,7 @@
                                     <th>{$user->ref_by}</th>
                                     <td>
                                         <a class="btn btn-info btn-sm" href="/admin/user/{$user->id}/edit">编辑</a>
-                                        <a class="btn btn-danger btn-sm" id="delete" value="{$user->id}" href="/admin/user/{$user->id}/delete">删除</a>
+                                        <a class="btn btn-danger btn-sm delete" id="delete" data-id="{$user->id}" href="">删除</a>
                                     </td>
                                 </tr>
                             {/foreach}
@@ -71,23 +75,21 @@
 
 <script>
     $(document).ready(function () {
-        function
-
-        delete()
-        {
+        function del(e) {
             $.ajax({
                 type: "DELETE",
-                url: "/admin/user/",
+                url: "/admin/user/"+$(e.target).data('id'),
                 dataType: "json",
                 data: {
-                    name: $("#name").val()
+                    name: $(e.target).data('id')
                 },
                 success: function (data) {
                     if (data.ret) {
                         $("#msg-error").hide(100);
                         $("#msg-success").show(100);
                         $("#msg-success-p").html(data.msg);
-                        window.setTimeout("location.href='/admin/user'", 2000);
+                        //window.setTimeout("location.href='/admin/user'", 2000);
+                        $(e.target).closest("tr").remove();
                     } else {
                         $("#msg-error").hide(10);
                         $("#msg-error").show(100);
@@ -100,14 +102,15 @@
                     $("#msg-error-p").html("发生错误：" + jqXHR.status);
                 }
             });
-        }
+        };
         $("html").keydown(function (event) {
             if (event.keyCode == 13) {
                 login();
             }
         });
-        $("#delete").click(function () {
-            delete();
+        $(document.body).on('click', 'a.delete', function (e) {
+            e.preventDefault();
+            confirm('确定删除？') && del(e);
         });
         $("#ok-close").click(function () {
             $("#msg-success").hide(100);

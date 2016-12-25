@@ -169,8 +169,15 @@ CREATE TABLE `sp_email_verify` (
 -- upgrade
 ALTER TABLE `user` MODIFY COLUMN `reg_date`  timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP AFTER `last_rest_pass_time`;
 ALTER TABLE `user` add `group` int NOT NULL DEFAULT 0;
-ALTER TABLE `user` ADD `cycle` int DEFAULT 1;-- 账单周期 1：月  2：季  3：半年  4：年
+/*ALTER TABLE `user` ADD `cycle` int DEFAULT 1;-- 账单周期 1：月  2：季  3：半年  4：年
 ALTER TABLE `user` ADD `bill_day` DATETIME DEFAULT 0; -- 账单日
-ALTER TABLE `user` ADD `last_bill_day` DATETIME; -- 最后一次出账日
+ALTER TABLE `user` ADD `last_bill_day` DATETIME; -- 最后一次出账日*/
 
-
+set GLOBAL event_scheduler=1; -- temporary, MUST enable event_scheduler via config file.
+DROP EVENT if EXISTS evt_disable_user;
+DELIMITER //
+CREATE EVENT evt_disable_user ON SCHEDULE EVERY 1 MINUTE ON COMPLETION PRESERVE DISABLE ON SLAVE
+DO BEGIN
+  UPDATE user set enable=CASE WHEN unix_timestamp() > expire_time then '0' else '1' END where expire_time>0; -- 禁用过期账号
+END //
+DELIMITER ;

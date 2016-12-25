@@ -10,8 +10,16 @@
         </h1>
     </section>
 
+
     <!-- Main content -->
     <section class="content">
+        {if $user->expired()}
+            <div class="alert alert-danger">
+                <i class="fa fa-bullhorn"></i>
+                Oh...你的账号已过期，该充值了😀
+            </div>
+        {/if}
+
         <!-- START PROGRESS BARS -->
         <div class="row">
             <div class="col-md-6">
@@ -78,6 +86,8 @@
                             </div>
                         </div>
                         <dl class="dl-horizontal">
+                            <dt>到期日期</dt>
+                            <dd {if $user->expired()}class="text-danger" title="账号已过期，请先充值后再使用" {/if}>{$user->dueDate()}</dd>
                             <dt>总流量</dt>
                             <dd>{$user->enableTraffic()}</dd>
                             <dt>已用流量</dt>

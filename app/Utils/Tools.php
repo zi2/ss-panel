@@ -88,6 +88,16 @@ class Tools
 
 
     /**
+     * Unix time to Date
+     * @param $time
+     * @return mixed
+     */
+    public static function toDate($time)
+    {
+        return date('Y-m-d', $time);
+    }
+
+    /**
      * Unix time to Date Time
      * @param $time
      * @return mixed
