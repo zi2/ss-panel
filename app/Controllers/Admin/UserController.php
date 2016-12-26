@@ -45,14 +45,13 @@ class UserController extends AdminController
 
         $user->email = $request->getParam('email');
         $user->transfer_enable = Tools::toGB($request->getParam('transfer_enable'));
-        if (!empty($request->getParam('extend')))
-            $user->expire_time = date_add(new \DateTime(date('y-m-d h:i:s', max($user->expire_time, time()))), new \DateInterval('P1M'))->getTimestamp();
         $user->group = $request->getParam('group');
-        $user->expire_time = strtotime($request->getParam('expire_time'));
 
         if ($request->getParam('action') == 'reset') {
             $user->u = 0;
             $user->d = 0;
+            if (!empty($request->getParam('extend')))
+                $user->expire_time = date_add(new \DateTime(date('y-m-d H:i:s', max($user->expire_time, time()))), new \DateInterval('P1M'))->getTimestamp();
         } else {
             if ($request->getParam('pass') != '') {
                 $user->pass = Hash::passwordHash($request->getParam('pass'));
@@ -60,6 +59,7 @@ class UserController extends AdminController
             if ($request->getParam('passwd') != '') {
                 $user->passwd = $request->getParam('passwd');
             }
+            $user->expire_time = strtotime($request->getParam('expire_time'));
             $user->port = $request->getParam('port');
             $user->invite_num = $request->getParam('invite_num');
             $user->method = $request->getParam('method');
