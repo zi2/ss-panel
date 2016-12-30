@@ -16,7 +16,7 @@ class UserController extends AdminController
         }
         $form = $request->getQueryParams();
         $users = User::whereRaw("1=1");
-        foreach (['email', 'group'] as $k) {
+        foreach (['email', 'group','enable'] as $k) {
             $users = $users->when(isset($form[$k]) && trim($form[$k]) != '', function ($q) use ($k, $form) {
                 return $q->where($k, $form[$k]);
             });

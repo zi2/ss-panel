@@ -21,6 +21,7 @@
                 <label class="control-label">用户组</label>
                 <input class="form-control" type="text" name="group" value="{if isset($form['group'])}{$form['group']}{/if}"/>
             </div>
+            <label><input type="checkbox" name="enable" value="1" {if isset($form['enable'])}checked{/if}>仅有效</label>
             <button class="btn btn-primary" type="submit">查询</button>
         </form>
         <div class="row">

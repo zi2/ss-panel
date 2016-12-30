@@ -82,7 +82,8 @@ class AuthController extends BaseController
             $code = $ary['code'];
         }
         $requireEmailVerification = Config::get('emailVerifyEnabled');
-        return $this->view()->assign('code', $code)->assign('requireEmailVerification', $requireEmailVerification)->display('auth/register.tpl');
+        $codeRequired = Config::get('codeRequired');
+        return $this->view()->assign('code', $code)->assign('codeRequired',$codeRequired)->assign('requireEmailVerification', $requireEmailVerification)->display('auth/register.tpl');
     }
 
     public function registerHandle($request, $response, $args) {
@@ -116,10 +117,10 @@ class AuthController extends BaseController
             return $this->echoJson($response, $res);
         }
         // check pwd length
-        if (strlen($passwd) < 8) {
+        if (strlen($passwd) < 6) {
             $res['ret'] = 0;
             $res['error_code'] = self::PasswordTooShort;
-            $res['msg'] = "密码太短";
+            $res['msg'] = "密码太短，最少需要6位";
             return $this->echoJson($response, $res);
         }
 
@@ -157,6 +158,7 @@ class AuthController extends BaseController
         }
 
         // do reg user
+        $isTrial=$c['user_id'] == '0';
         $user = new User();
         $user->user_name = $name;
         $user->email = $email;
@@ -166,10 +168,12 @@ class AuthController extends BaseController
         $user->t = 0;
         $user->u = 0;
         $user->d = 0;
-        $user->transfer_enable = Tools::toGB(Config::get($c['user_id'] == '1' ? 'defaultTraffic' : 'publicTraffic'));
+        $user->transfer_enable = Tools::toGB(Config::get($isTrial ? 'publicTraffic' : 'defaultTraffic'));
         $user->invite_num = Config::get('inviteNum');
         $user->reg_ip = Http::getClientIP();
         $user->ref_by = $c->user_id;
+        $user->reg_date=date('Y-m-d H:i:s');
+        $user->expire_time=strtotime('+ '.($isTrial ? '7 days' : '1 month'));
 
         //赠送邀请人流量
         if (intval(Config::get('inviterTraffic')) > 0) {

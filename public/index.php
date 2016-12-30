@@ -1,4 +1,6 @@
 <?php
+//set timezone to UTC+8
+ini_set('date.timezone','Asia/Shanghai');
 
 //  PUBLIC_PATH
 define('PUBLIC_PATH', __DIR__);
